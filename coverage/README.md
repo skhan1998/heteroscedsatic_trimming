@@ -1,0 +1,1 @@
+This folder contains code to replicate the coverage experiments of Section 6.1. Running the file `hetero_coverage.R` generates Tables 1 and 2 of the paper, and saves the results to the file `mixed_coverage_results.RDS`.
