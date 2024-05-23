@@ -1,1 +1,1 @@
-This folder contains code to replicate the experiments of Section 6.2 of the paper. In particular, `nhanes_data.txt` contains the raw data and running the file `nhanes_trimming.R` generates Figures 1 and 2, as well as Table 3 in the paper. 
+This folder contains code to replicate the experiments of Section 6.2 of the paper. In particular, `nhanes_data.txt` contains the raw data and running the file `nhanes_trimming.R` generates Figures 1, 2 and 4, as well as Table 3 in the paper. 
