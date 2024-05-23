@@ -229,6 +229,42 @@ summary_df %>%
   ggplot(aes(x= Education, y = value, fill = name)) + 
   geom_bar(stat = "identity", position = "dodge")
   
+
+#Plot curve of objectives 
+gamma_grid = seq(min(df_trim$k), max(df_trim$k), 1)
+
+obj_result_df = foreach (g = gamma_grid, .combine = "rbind") %do%{
+  obj_het = hetero_objective(g)
+  se_hat_het = trimmed_estimator(df_trim, df_trim$k < g)[2]
+
+  obj_hom = homo_objective(g)
+  se_hat_hom = trimmed_estimator(df_trim, df_trim$overlap <= g)[2]
+
+  c(g, sqrt(obj_het/nrow(df_trim)), se_hat_het, sqrt(obj_hom/nrow(df_trim)), se_hat_hom)
+} %>% data.frame()
+
+colnames(obj_result_df) = c("gamma", "objective_het", "se_het", "objective_hom", "se_hom")
+
+obj_result_df %>%
+  pivot_longer(cols = c("objective_het", "se_het", "objective_hom", "se_hom"),
+               names_to = c("quantity", "method"),
+               names_sep = "_") %>%
+  mutate(quantity = case_when(quantity == "objective" ~ "Heteroscedastic objective",
+                              quantity == "se" ~ "Estimated std. error")) %>%
+  filter(method == "het") %>%
+  ggplot(aes(x = gamma, y = value, color = quantity)) +
+  geom_line() +
+  labs(x = TeX("Gamma, $\\gamma$"),
+       y = "Objective value/Estimated std. error",
+       color = "Quantity") +
+  theme_custom()
+
+ggsave(
+  "nhanes_obj.pdf",
+  width = 6,
+  height = 3,
+  units = "in")
+
   
   
   
