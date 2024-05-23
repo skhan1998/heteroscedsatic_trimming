@@ -154,5 +154,6 @@ data.frame(df_trim) %>%
                                 10, 100, 1000, 10000, 10000, 100000)) +
   labs(x = TeX("\\hat{k}"), y = "AIPW score") +
   theme_custom()
-ggsave("acic_heterogeneity_%s.pdf", width = 4, height = 3, useDingbats = T)
+ggsave(sprintf("acic_heterogeneity_%s.pdf", DATASET), 
+       width = 4, height = 3, useDingbats = T)
 
